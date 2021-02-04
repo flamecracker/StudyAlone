@@ -3,7 +3,7 @@ from PIL import Image
 from django.db.models.fields.files import ImageField, ImageFieldFile
 
 class ThumbnailImageFieldFile(ImageFieldFile):
-    def _add_thumb(s):
+    def _add_thumb(self,s):
         parts = s.split(".")
         parts.insert(-1,"thumb")
         if parts[-1].lower() not in ['jpeg','jpg']:
@@ -17,7 +17,7 @@ class ThumbnailImageFieldFile(ImageFieldFile):
         return self._add_thumb(self.url)
     
     def save(self, name, content, save=True):
-        super().save(name,content, save)
+        super().save(name, content, save)
 
         img = Image.open(self.path)
         size = (self.field.thumb_width,self.field.thumb_height)
